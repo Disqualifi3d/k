@@ -62,7 +62,7 @@ table.insert(Connections, Player.OnTeleport:Connect(function()
         if isfile("BedwarsGlobalEsp.lua") then
             Script = "loadstring(readfile('BedwarsGlobalEsp.lua'))()"
         else
-            Script = "loadstring(game:HttpGet('https://github.com/Disqualifi3d/Exp/blob/main/externalserverproposition.lua'))()"
+            Script = "loadstring(game:HttpGet('https://raw.githubusercontent.com/Disqualifi3d/Exp/refs/heads/main/externalserverproposition.lua'))()"
         end
         
         queueteleport(Script)

@@ -26,6 +26,8 @@ else
     Conf.Parent = game.CoreGui
 end
 
+
+
 local Settings = {
     Range = 15,
     Degrees = 90,
@@ -303,6 +305,8 @@ local Map = workspace:FindFirstChild("Map")
 local lastSwingServerTime = 0
 local lastSwingServerTimeDelta = 0
 
+local Debug = false
+
 if not Map and game.PlaceId ~= 6872265039 then 
     repeat
         Map = workspace:FindFirstChild("Map")
@@ -327,7 +331,7 @@ table.insert(Connections, plr.OnTeleport:Connect(function()
         if isfile("BedwarsEnhanced.lua") then
             Script = "loadstring(readfile('BedwarsEnhanced.lua'))()"
         else
-            Script = "loadstring(game:HttpGet('https://raw.githubusercontent.com/Disqualifi3d/k/refs/heads/main/lol.lua'))()"
+            Script = "loadstring(game:HttpGet('https://raw.githubusercontent.com/Disqualifi3d/Exp/refs/heads/main/lol.lua'))()"
         end
 
 		queueteleport(Script)
@@ -795,6 +799,8 @@ local function Break_This_Block(Block_Position, Block, Normal, anim)
 
 			task.spawn(function()
 
+                if Debug then print("Made it below task.spawn") end
+
 				Bedwars.ClientDamageBlock:Get("DamageBlock"):CallServerAsync({
 					blockRef = {blockPosition = Block_Position},
 					hitPosition = Block_Position * 3,
@@ -811,6 +817,7 @@ local function Break_This_Block(Block_Position, Block, Normal, anim)
 						HealthbarBlockTable.blockHealth = result == "destroyed" and 0 or HealthbarBlockTable.blockHealth
 						blockdmg = Bedwars.BlockController:calculateBlockDamage(plr, BlockHealthBarPos)
 						HealthbarBlockTable.blockHealth = math.max(HealthbarBlockTable.blockHealth - blockdmg, 0)
+
 						if true then
 							--Bedwars.BlockBreaker:updateHealthbar(BlockHealthBarPos, HealthbarBlockTable.blockHealth, Block:GetAttribute("MaxHealth"), blockdmg, Block)
 							
@@ -832,6 +839,8 @@ local function Break_This_Block(Block_Position, Block, Normal, anim)
                         repeat
                             task.wait()
                         until not Break_Hold
+
+                        warn("Code is done")
 
 						if animation ~= nil then
 							animation:Stop()
@@ -1197,11 +1206,17 @@ table.insert(Connections, UIS.InputBegan:Connect(function(Input, Processed)
                     (Result.Instance:GetAttribute("Block") and Result.Instance)
                     or (Result.Instance.Parent and Result.Instance.Parent:GetAttribute("Block") and Result.Instance.Parent)
 
+                    if Debug then print("Block = " .. tostring(Block)) end
+
                     local Block_Position = Get_Block_Position(Block.Position)
+
+                    if Debug then print("Block Position = " .. tostring(Block.Position)) end
 
                     if Block.Name == "bed" or Block.Name == "Bed" then
                         Block_Position = Get_Block_Position(Check_Which_Block_Is_Closer_For_Bed(Block, Result.Position))
                     end
+                    
+                    if Debug then print("Block Name = " .. Block.Name) end
 
                     Break_This_Block(Block_Position, Block, Result.Normal, true)
                 end

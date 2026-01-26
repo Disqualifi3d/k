@@ -25,11 +25,15 @@ end
 
 local Conf = game.CoreGui:FindFirstChild("DQESP")
 if Conf then
-    game:GetService("StarterGui"):SetCore("SendNotification",{
-        Title = "Failed",
-        Text = "DQ ESP is already running.",
-        Icon = "rbxassetid://14459309256"
-    })
+    local s = Instance.new("Sound")
+    s.SoundId = "rbxassetid://5914602124"
+    s.Parent = workspace
+    s:Play()
+
+    s.Ended:Once(function()
+        s:Destroy()
+    end)
+
     return
 else
     Conf = Instance.new("Configuration")
@@ -58,7 +62,7 @@ table.insert(Connections, Player.OnTeleport:Connect(function()
         if isfile("BedwarsGlobalEsp.lua") then
             Script = "loadstring(readfile('BedwarsGlobalEsp.lua'))()"
         else
-            Script = "loadstring(game:HttpGet('https://pastebin.com/raw/dEA3CPFB'))()"
+            Script = "loadstring(game:HttpGet('https://github.com/Disqualifi3d/Exp/blob/main/externalserverproposition.lua'))()"
         end
         
         queueteleport(Script)
@@ -66,11 +70,17 @@ table.insert(Connections, Player.OnTeleport:Connect(function()
 end))
 
 if game.PlaceId == 6872265039 then
-    game:GetService("StarterGui"):SetCore("SendNotification",{
-        Title = "Success",
-        Text = "DQ ESP will load once you join a normal match.",
-        Icon = "rbxassetid://14459309256"
-    })
+    local Part = Instance.new("Part")
+
+    Part.CFrame = CFrame.new(0,51,0)
+    Part.Transparency = 0.75
+    Part.CanCollide = false
+    Part.Anchored = true
+    Part.Size = Vector3.one
+    Part.Parent = workspace
+    Part.Color = Color3.fromRGB(0, 0, 255)
+
+
      return
 end
 

@@ -60,6 +60,10 @@ local Store = { --// DONT EDIT ANYTHING HERE
 
     Block_Hit = 0.3,
 
+    Characters = {
+
+    },
+
     Swords = { 
         [1] = {
             Name = "wood_sword",
@@ -671,54 +675,54 @@ local function Get_Box()
     return Found
 end
 
-local function Anti_Streamer_This(This:Player)
+local function Anti_Streamer_This(This: Player)
     if not This or not This:IsA("Player") then return end
     if This == plr then return end
     if This:GetAttribute("Disguised") ~= nil then This:SetAttribute("Disguised", not Settings.Anti_Streamer) end
 
 
     if not This.Character then return end
-    local Head:Instance = This.Character:FindFirstChild("Head")
-    local Name_Tag:BillboardGui = Head and Head:FindFirstChild("Nametag")
-    local DisplayNameContainer:Frame = Name_Tag and Name_Tag:FindFirstChild("DisplayNameContainer")
-    local Display_Name:TextLabel = DisplayNameContainer and DisplayNameContainer:FindFirstChild("DisplayName")
+    local Head: Instance = This.Character:FindFirstChild("Head")
+    local Name_Tag: BillboardGui = Head and Head:WaitForChild("Nametag", 20)
+    local DisplayNameContainer: Frame = Name_Tag and Name_Tag:FindFirstChild("DisplayNameContainer")
+    local Display_Name: TextLabel = DisplayNameContainer and DisplayNameContainer:FindFirstChild("DisplayName")
 
     if Display_Name then
         Display_Name.Text = (Settings.Anti_Streamer and (This.DisplayName or This.Name)) or (This:GetAttribute("DisguiseDisplayName") or (This.DisplayName or This.Name))
     end
 
-    if plr.PlayerGui:FindFirstChild("MatchDraftApp") then
-        
-        for _, v in pairs(plr.PlayerGui.MatchDraftApp:GetDescendants()) do
-            if v:IsA("TextLabel") and (v.Text == This.DisplayName or string.find(v.Text, This.DisplayName)) then
-
-                local Player_Kit_Title, Player_Kit_Image = Get_Kit(This)
-
-                local Player_Card = v.Parent.Parent
-                local Text_Container = v.Parent
-                local KoA = Text_Container:FindFirstChild("KitOrActionName")
-
-                if KoA then KoA.Text = Player_Kit_Title or "unknown" end
-                v.Text = "[" .. This:GetAttribute("PlayerLevel") .. "] " .. This.DisplayName
-
-                local Image = Player_Card:FindFirstChild("KitImage")
-                if not Image then
-                    Image = Instance.new("ImageLabel")
-
-                    Image.AnchorPoint = Vector2.new(1, 0.5)
-                    Image.Position = UDim2.new(1.05, 0, 0.5, 0)
-                    Image.ImageTransparency = 0.4
-                    Image.Size = UDim2.new(1.5, 0, 1.5, 0)
-                    Image.BackgroundTransparency = 1
-                    Image.SizeConstraint = Enum.SizeConstraint.RelativeYY
-                    Image.Name = "KitImage"
-                    Image.Parent = Player_Card
-                end
-
-                Image.Image = Player_Kit_Image or ""
-            end
-        end
-    end
+    --if plr.PlayerGui:FindFirstChild("MatchDraftApp") then
+    --    
+    --    for _, v in pairs(plr.PlayerGui.MatchDraftApp:GetDescendants()) do
+    --        if v:IsA("TextLabel") and (v.Text == This.DisplayName or string.find(v.Text, This.DisplayName)) then
+    --
+    --            local Player_Kit_Title, Player_Kit_Image = Get_Kit(This)
+    --
+    --            local Player_Card = v.Parent.Parent
+    --            local Text_Container = v.Parent
+    --            local KoA = Text_Container:FindFirstChild("KitOrActionName")
+    --
+    --            if KoA then KoA.Text = Player_Kit_Title or "unknown" end
+    --            v.Text = "[" .. This:GetAttribute("PlayerLevel") .. "] " .. This.DisplayName
+    --
+    --            local Image = Player_Card:FindFirstChild("KitImage")
+    --            if not Image then
+    --                Image = Instance.new("ImageLabel")
+    --
+    --                Image.AnchorPoint = Vector2.new(1, 0.5)
+    --                Image.Position = UDim2.new(1.05, 0, 0.5, 0)
+    --                Image.ImageTransparency = 0.4
+    --                Image.Size = UDim2.new(1.5, 0, 1.5, 0)
+    --                Image.BackgroundTransparency = 1
+    --                Image.SizeConstraint = Enum.SizeConstraint.RelativeYY
+    --                Image.Name = "KitImage"
+    --                Image.Parent = Player_Card
+    --            end
+    --
+    --            Image.Image = Player_Kit_Image or ""
+    --        end
+    --    end
+    --end
 end
 
 local function Clear_To_KA()
@@ -880,236 +884,254 @@ local Main_Toggle = Instance.new("Frame")
 
 --Properties:
 
-lobotomy_KA.Name = "lobotomy_KA"
-lobotomy_KA.Parent = game.CoreGui
-lobotomy_KA.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+local ui_adjustment do
 
-Main.Name = "Main"
-Main.Parent = lobotomy_KA
-Main.AnchorPoint = Vector2.new(0.5, 0.5)
-Main.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Main.BackgroundTransparency = 1.000
-Main.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Main.BorderSizePixel = 0
-Main.Position = UDim2.new(0.949999988, 0, 0.467000008, 0)
-Main.Size = UDim2.new(0.0973017141, 0, 0.231920198, 0)
+    lobotomy_KA.Name = "lobotomy_KA"
+    lobotomy_KA.Parent = game.CoreGui
+    lobotomy_KA.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
-Delete.Name = "Delete"
-Delete.Parent = Main
-Delete.AnchorPoint = Vector2.new(0.5, 0.5)
-Delete.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Delete.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Delete.BorderSizePixel = 0
-Delete.Position = UDim2.new(0.403360784, 0, 1.05086029, 0)
-Delete.Size = UDim2.new(0.60504204, 0, 0.0915806293, 0)
-Delete.Font = Enum.Font.SourceSans
-Delete.Text = "Delete"
-Delete.TextColor3 = Color3.fromRGB(0, 0, 0)
-Delete.TextSize = 14.000
-Delete.TextWrapped = true
+    Main.Name = "Main"
+    Main.Parent = lobotomy_KA
+    Main.AnchorPoint = Vector2.new(0.5, 0.5)
+    Main.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Main.BackgroundTransparency = 1.000
+    Main.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    Main.BorderSizePixel = 0
+    Main.Position = UDim2.new(0.949999988, 0, 0.467000008, 0)
+    Main.Size = UDim2.new(0.0973017141, 0, 0.231920198, 0)
 
-UIGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(50, 50, 50)), ColorSequenceKeypoint.new(0.50, Color3.fromRGB(150, 150, 150)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(50, 50, 50))}
-UIGradient.Rotation = 45
-UIGradient.Parent = Delete
+    Delete.Name = "Delete"
+    Delete.Parent = Main
+    Delete.AnchorPoint = Vector2.new(0.5, 0.5)
+    Delete.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Delete.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    Delete.BorderSizePixel = 0
+    Delete.Position = UDim2.new(0.403360784, 0, 1.05086029, 0)
+    Delete.Size = UDim2.new(0.60504204, 0, 0.0915806293, 0)
+    Delete.Font = Enum.Font.SourceSans
+    Delete.Text = "Delete"
+    Delete.TextColor3 = Color3.fromRGB(0, 0, 0)
+    Delete.TextSize = 14.000
+    Delete.TextWrapped = true
 
-Toggle.Name = "Toggle"
-Toggle.Parent = Main
-Toggle.AnchorPoint = Vector2.new(0.5, 0.5)
-Toggle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Toggle.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Toggle.BorderSizePixel = 0
-Toggle.Position = UDim2.new(0.407563031, 0, 0.553548515, 0)
-Toggle.Size = UDim2.new(1, 0, 0.268999994, 0)
-Toggle.Font = Enum.Font.SourceSans
-Toggle.Text = "Toggle: [nil]"
-Toggle.TextColor3 = Color3.fromRGB(0, 0, 0)
-Toggle.TextSize = 14.000
+    UIGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(50, 50, 50)), ColorSequenceKeypoint.new(0.50, Color3.fromRGB(150, 150, 150)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(50, 50, 50))}
+    UIGradient.Rotation = 45
+    UIGradient.Parent = Delete
 
-UIGradient_2.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(50, 50, 50)), ColorSequenceKeypoint.new(0.50, Color3.fromRGB(150, 150, 150)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(50, 50, 50))}
-UIGradient_2.Rotation = 45
-UIGradient_2.Parent = Toggle
+    Toggle.Name = "Toggle"
+    Toggle.Parent = Main
+    Toggle.AnchorPoint = Vector2.new(0.5, 0.5)
+    Toggle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Toggle.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    Toggle.BorderSizePixel = 0
+    Toggle.Position = UDim2.new(0.407563031, 0, 0.553548515, 0)
+    Toggle.Size = UDim2.new(1, 0, 0.268999994, 0)
+    Toggle.Font = Enum.Font.SourceSans
+    Toggle.Text = "Toggle: [nil]"
+    Toggle.TextColor3 = Color3.fromRGB(0, 0, 0)
+    Toggle.TextSize = 14.000
 
-KA_Mode.Name = "KA_Mode"
-KA_Mode.Parent = Main
-KA_Mode.AnchorPoint = Vector2.new(0.5, 0.5)
-KA_Mode.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-KA_Mode.BorderColor3 = Color3.fromRGB(0, 0, 0)
-KA_Mode.BorderSizePixel = 0
-KA_Mode.Position = UDim2.new(0.407563031, 0, 0.325053871, 0)
-KA_Mode.Size = UDim2.new(1, 0, 0.102333337, 0)
-KA_Mode.Font = Enum.Font.SourceSans
-KA_Mode.Text = "KA_Mode: [nil]"
-KA_Mode.TextColor3 = Color3.fromRGB(0, 0, 0)
-KA_Mode.TextScaled = true
-KA_Mode.TextSize = 14.000
-KA_Mode.TextWrapped = true
+    UIGradient_2.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(50, 50, 50)), ColorSequenceKeypoint.new(0.50, Color3.fromRGB(150, 150, 150)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(50, 50, 50))}
+    UIGradient_2.Rotation = 45
+    UIGradient_2.Parent = Toggle
 
-UIGradient_3.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(50, 50, 50)), ColorSequenceKeypoint.new(0.50, Color3.fromRGB(150, 150, 150)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(50, 50, 50))}
-UIGradient_3.Rotation = 45
-UIGradient_3.Parent = KA_Mode
+    KA_Mode.Name = "KA_Mode"
+    KA_Mode.Parent = Main
+    KA_Mode.AnchorPoint = Vector2.new(0.5, 0.5)
+    KA_Mode.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    KA_Mode.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    KA_Mode.BorderSizePixel = 0
+    KA_Mode.Position = UDim2.new(0.407563031, 0, 0.325053871, 0)
+    KA_Mode.Size = UDim2.new(1, 0, 0.102333337, 0)
+    KA_Mode.Font = Enum.Font.SourceSans
+    KA_Mode.Text = "KA_Mode: [nil]"
+    KA_Mode.TextColor3 = Color3.fromRGB(0, 0, 0)
+    KA_Mode.TextScaled = true
+    KA_Mode.TextSize = 14.000
+    KA_Mode.TextWrapped = true
 
-Attack_Range.Name = "Attack_Range"
-Attack_Range.Parent = Main
-Attack_Range.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Attack_Range.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Attack_Range.BorderSizePixel = 0
-Attack_Range.Position = UDim2.new(-0.0920000002, 0, 0.0199999996, 0)
-Attack_Range.Size = UDim2.new(1.00043702, 0, 0.0860000029, 0)
-Attack_Range.Font = Enum.Font.SourceSans
-Attack_Range.Text = "Attack Range:"
-Attack_Range.TextColor3 = Color3.fromRGB(0, 0, 0)
-Attack_Range.TextSize = 14.000
-Attack_Range.TextXAlignment = Enum.TextXAlignment.Left
+    UIGradient_3.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(50, 50, 50)), ColorSequenceKeypoint.new(0.50, Color3.fromRGB(150, 150, 150)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(50, 50, 50))}
+    UIGradient_3.Rotation = 45
+    UIGradient_3.Parent = KA_Mode
 
-UIGradient_4.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(50, 50, 50)), ColorSequenceKeypoint.new(0.50, Color3.fromRGB(150, 150, 150)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(50, 50, 50))}
-UIGradient_4.Rotation = 45
-UIGradient_4.Parent = Attack_Range
+    Attack_Range.Name = "Attack_Range"
+    Attack_Range.Parent = Main
+    Attack_Range.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Attack_Range.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    Attack_Range.BorderSizePixel = 0
+    Attack_Range.Position = UDim2.new(-0.0920000002, 0, 0.0199999996, 0)
+    Attack_Range.Size = UDim2.new(1.00043702, 0, 0.0860000029, 0)
+    Attack_Range.Font = Enum.Font.SourceSans
+    Attack_Range.Text = "Attack Range:"
+    Attack_Range.TextColor3 = Color3.fromRGB(0, 0, 0)
+    Attack_Range.TextSize = 14.000
+    Attack_Range.TextXAlignment = Enum.TextXAlignment.Left
 
-RangeTextbox.Name = "HitTextbox"
-RangeTextbox.Parent = Attack_Range
-RangeTextbox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-RangeTextbox.BackgroundTransparency = 1.000
-RangeTextbox.BorderColor3 = Color3.fromRGB(0, 0, 0)
-RangeTextbox.BorderSizePixel = 0
-RangeTextbox.Position = UDim2.new(0.191315711, 0, 0, 0)
-RangeTextbox.Size = UDim2.new(0.80868423, 0, 1, 0)
-RangeTextbox.Font = Enum.Font.SourceSans
-RangeTextbox.PlaceholderColor3 = Color3.fromRGB(0, 0, 0)
-RangeTextbox.Text = "0.3"
-RangeTextbox.TextColor3 = Color3.fromRGB(0, 0, 0)
-RangeTextbox.TextSize = 14.000
-RangeTextbox.TextWrapped = true
+    UIGradient_4.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(50, 50, 50)), ColorSequenceKeypoint.new(0.50, Color3.fromRGB(150, 150, 150)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(50, 50, 50))}
+    UIGradient_4.Rotation = 45
+    UIGradient_4.Parent = Attack_Range
 
-Title.Name = "Title"
-Title.Parent = Main
-Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Title.BackgroundTransparency = 1.000
-Title.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Title.BorderSizePixel = 0
-Title.Position = UDim2.new(-0.108182222, 0, -0.354838699, 0)
-Title.Size = UDim2.new(1.03189194, 0, 0.268817216, 0)
-Title.Font = Enum.Font.SourceSans
-Title.Text = "DQ CLOSET"
-Title.TextColor3 = Color3.fromRGB(255, 255, 255)
-Title.TextScaled = true
-Title.TextSize = 14
-Title.TextWrapped = true
+    RangeTextbox.Name = "HitTextbox"
+    RangeTextbox.Parent = Attack_Range
+    RangeTextbox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    RangeTextbox.BackgroundTransparency = 1.000
+    RangeTextbox.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    RangeTextbox.BorderSizePixel = 0
+    RangeTextbox.Position = UDim2.new(0.191315711, 0, 0, 0)
+    RangeTextbox.Size = UDim2.new(0.80868423, 0, 1, 0)
+    RangeTextbox.Font = Enum.Font.SourceSans
+    RangeTextbox.PlaceholderColor3 = Color3.fromRGB(0, 0, 0)
+    RangeTextbox.Text = "0.3"
+    RangeTextbox.TextColor3 = Color3.fromRGB(0, 0, 0)
+    RangeTextbox.TextSize = 14.000
+    RangeTextbox.TextWrapped = true
 
-UIGradient_5.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(100, 100, 100)), ColorSequenceKeypoint.new(0.50, Color3.fromRGB(0, 0, 0)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(100, 100, 100))}
-UIGradient_5.Rotation = 90
-UIGradient_5.Parent = Title
+    Title.Name = "Title"
+    Title.Parent = Main
+    Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Title.BackgroundTransparency = 1.000
+    Title.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    Title.BorderSizePixel = 0
+    Title.Position = UDim2.new(-0.108182222, 0, -0.354838699, 0)
+    Title.Size = UDim2.new(1.03189194, 0, 0.268817216, 0)
+    Title.Font = Enum.Font.SourceSans
+    Title.Text = "DQ CLOSET"
+    Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Title.TextScaled = true
+    Title.TextSize = 14
+    Title.TextWrapped = true
 
-Entity_Filter.Name = "Entity_Filter"
-Entity_Filter.Parent = Main
-Entity_Filter.AnchorPoint = Vector2.new(0.5, 0.5)
-Entity_Filter.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Entity_Filter.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Entity_Filter.BorderSizePixel = 0
-Entity_Filter.Position = UDim2.new(0.415883899, 0, 0.77666676, 0)
-Entity_Filter.Size = UDim2.new(1, 0, 0.102333337, 0)
-Entity_Filter.Font = Enum.Font.SourceSans
-Entity_Filter.Text = "Entity Filter: [nil]"
-Entity_Filter.TextColor3 = Color3.fromRGB(0, 0, 0)
-Entity_Filter.TextSize = 14.000
-Entity_Filter.TextWrapped = true
+    UIGradient_5.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(100, 100, 100)), ColorSequenceKeypoint.new(0.50, Color3.fromRGB(0, 0, 0)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(100, 100, 100))}
+    UIGradient_5.Rotation = 90
+    UIGradient_5.Parent = Title
 
-UIGradient_6.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(50, 50, 50)), ColorSequenceKeypoint.new(0.50, Color3.fromRGB(150, 150, 150)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(50, 50, 50))}
-UIGradient_6.Rotation = 45
-UIGradient_6.Parent = Entity_Filter
+    Entity_Filter.Name = "Entity_Filter"
+    Entity_Filter.Parent = Main
+    Entity_Filter.AnchorPoint = Vector2.new(0.5, 0.5)
+    Entity_Filter.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Entity_Filter.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    Entity_Filter.BorderSizePixel = 0
+    Entity_Filter.Position = UDim2.new(0.415883899, 0, 0.77666676, 0)
+    Entity_Filter.Size = UDim2.new(1, 0, 0.102333337, 0)
+    Entity_Filter.Font = Enum.Font.SourceSans
+    Entity_Filter.Text = "Entity Filter: [nil]"
+    Entity_Filter.TextColor3 = Color3.fromRGB(0, 0, 0)
+    Entity_Filter.TextSize = 14.000
+    Entity_Filter.TextWrapped = true
 
-Anti_Streamer.Name = "Anti_Streamer"
-Anti_Streamer.Parent = Main
-Anti_Streamer.AnchorPoint = Vector2.new(0.5, 0.5)
-Anti_Streamer.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Anti_Streamer.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Anti_Streamer.BorderSizePixel = 0
-Anti_Streamer.Position = UDim2.new(0.415883899, 0, 0.916451752, 0)
-Anti_Streamer.Size = UDim2.new(1, 0, 0.102333337, 0)
-Anti_Streamer.Font = Enum.Font.SourceSans
-Anti_Streamer.Text = "Anti Streamer: [nil]"
-Anti_Streamer.TextColor3 = Color3.fromRGB(0, 0, 0)
-Anti_Streamer.TextSize = 14.000
-Anti_Streamer.TextWrapped = true
+    UIGradient_6.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(50, 50, 50)), ColorSequenceKeypoint.new(0.50, Color3.fromRGB(150, 150, 150)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(50, 50, 50))}
+    UIGradient_6.Rotation = 45
+    UIGradient_6.Parent = Entity_Filter
 
-UIGradient_7.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(50, 50, 50)), ColorSequenceKeypoint.new(0.50, Color3.fromRGB(150, 150, 150)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(50, 50, 50))}
-UIGradient_7.Rotation = 45
-UIGradient_7.Parent = Anti_Streamer
+    Anti_Streamer.Name = "Anti_Streamer"
+    Anti_Streamer.Parent = Main
+    Anti_Streamer.AnchorPoint = Vector2.new(0.5, 0.5)
+    Anti_Streamer.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Anti_Streamer.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    Anti_Streamer.BorderSizePixel = 0
+    Anti_Streamer.Position = UDim2.new(0.415883899, 0, 0.916451752, 0)
+    Anti_Streamer.Size = UDim2.new(1, 0, 0.102333337, 0)
+    Anti_Streamer.Font = Enum.Font.SourceSans
+    Anti_Streamer.Text = "Anti Streamer: [nil]"
+    Anti_Streamer.TextColor3 = Color3.fromRGB(0, 0, 0)
+    Anti_Streamer.TextSize = 14.000
+    Anti_Streamer.TextWrapped = true
 
-Degrees_Ui.Name = "Degrees_Ui"
-Degrees_Ui.Parent = Main
-Degrees_Ui.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Degrees_Ui.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Degrees_Ui.BorderSizePixel = 0
-Degrees_Ui.Position = UDim2.new(-0.0924369767, 0, 0.140000045, 0)
-Degrees_Ui.Size = UDim2.new(1.00043702, 0, 0.0860000029, 0)
-Degrees_Ui.Font = Enum.Font.SourceSans
-Degrees_Ui.Text = "Degrees:"
-Degrees_Ui.TextColor3 = Color3.fromRGB(0, 0, 0)
-Degrees_Ui.TextSize = 14.000
-Degrees_Ui.TextXAlignment = Enum.TextXAlignment.Left
+    UIGradient_7.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(50, 50, 50)), ColorSequenceKeypoint.new(0.50, Color3.fromRGB(150, 150, 150)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(50, 50, 50))}
+    UIGradient_7.Rotation = 45
+    UIGradient_7.Parent = Anti_Streamer
 
-UIGradient_8.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(50, 50, 50)), ColorSequenceKeypoint.new(0.50, Color3.fromRGB(150, 150, 150)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(50, 50, 50))}
-UIGradient_8.Rotation = 45
-UIGradient_8.Parent = Degrees_Ui
+    Degrees_Ui.Name = "Degrees_Ui"
+    Degrees_Ui.Parent = Main
+    Degrees_Ui.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Degrees_Ui.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    Degrees_Ui.BorderSizePixel = 0
+    Degrees_Ui.Position = UDim2.new(-0.0924369767, 0, 0.140000045, 0)
+    Degrees_Ui.Size = UDim2.new(1.00043702, 0, 0.0860000029, 0)
+    Degrees_Ui.Font = Enum.Font.SourceSans
+    Degrees_Ui.Text = "Degrees:"
+    Degrees_Ui.TextColor3 = Color3.fromRGB(0, 0, 0)
+    Degrees_Ui.TextSize = 14.000
+    Degrees_Ui.TextXAlignment = Enum.TextXAlignment.Left
 
-DegreesTextbox.Name = "DegreesTextbox"
-DegreesTextbox.Parent = Degrees_Ui
-DegreesTextbox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-DegreesTextbox.BackgroundTransparency = 1.000
-DegreesTextbox.BorderColor3 = Color3.fromRGB(0, 0, 0)
-DegreesTextbox.BorderSizePixel = 0
-DegreesTextbox.Position = UDim2.new(0.191315711, 0, 0, 0)
-DegreesTextbox.Size = UDim2.new(0.80868423, 0, 1, 0)
-DegreesTextbox.Font = Enum.Font.SourceSans
-DegreesTextbox.PlaceholderColor3 = Color3.fromRGB(0, 0, 0)
-DegreesTextbox.Text = "80"
-DegreesTextbox.TextColor3 = Color3.fromRGB(0, 0, 0)
-DegreesTextbox.TextSize = 14.000
-DegreesTextbox.TextWrapped = true
+    UIGradient_8.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(50, 50, 50)), ColorSequenceKeypoint.new(0.50, Color3.fromRGB(150, 150, 150)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(50, 50, 50))}
+    UIGradient_8.Rotation = 45
+    UIGradient_8.Parent = Degrees_Ui
 
-Main_Toggle.Name = "Main_Toggle"
-Main_Toggle.Parent = lobotomy_KA
-Main_Toggle.Active = true
-Main_Toggle.AnchorPoint = Vector2.new(0.5, 0.5)
-Main_Toggle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Main_Toggle.BackgroundTransparency = 1.000
-Main_Toggle.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Main_Toggle.BorderSizePixel = 0
-Main_Toggle.Position = UDim2.new(0.946177542, 0, 0.47630924, 0)
-Main_Toggle.Size = UDim2.new(0.107645161, 0, 0.270573556, 0)
-Main_Toggle.ZIndex = 2
+    DegreesTextbox.Name = "DegreesTextbox"
+    DegreesTextbox.Parent = Degrees_Ui
+    DegreesTextbox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    DegreesTextbox.BackgroundTransparency = 1.000
+    DegreesTextbox.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    DegreesTextbox.BorderSizePixel = 0
+    DegreesTextbox.Position = UDim2.new(0.191315711, 0, 0, 0)
+    DegreesTextbox.Size = UDim2.new(0.80868423, 0, 1, 0)
+    DegreesTextbox.Font = Enum.Font.SourceSans
+    DegreesTextbox.PlaceholderColor3 = Color3.fromRGB(0, 0, 0)
+    DegreesTextbox.Text = "80"
+    DegreesTextbox.TextColor3 = Color3.fromRGB(0, 0, 0)
+    DegreesTextbox.TextSize = 14.000
+    DegreesTextbox.TextWrapped = true
 
-local Stroke_1 = Instance.new("UIStroke")
-Stroke_1.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-Stroke_1.Thickness = 1
-Stroke_1.Parent = Delete
+    Main_Toggle.Name = "Main_Toggle"
+    Main_Toggle.Parent = lobotomy_KA
+    Main_Toggle.Active = true
+    Main_Toggle.AnchorPoint = Vector2.new(0.5, 0.5)
+    Main_Toggle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Main_Toggle.BackgroundTransparency = 1.000
+    Main_Toggle.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    Main_Toggle.BorderSizePixel = 0
+    Main_Toggle.Position = UDim2.new(0.946177542, 0, 0.47630924, 0)
+    Main_Toggle.Size = UDim2.new(0.107645161, 0, 0.270573556, 0)
+    Main_Toggle.ZIndex = 2
 
-local Stroke_2, Stroke_3, Stroke_4, Stroke_5, Stroke_6, Stroke_7 =
-    Stroke_1:Clone(),
-    Stroke_1:Clone(),
-    Stroke_1:Clone(),
-    Stroke_1:Clone(),
-    Stroke_1:Clone(),
-    Stroke_1:Clone()
+    local Stroke_1 = Instance.new("UIStroke")
+    Stroke_1.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+    Stroke_1.Thickness = 1
+    Stroke_1.Parent = Delete
 
-Stroke_2.Parent, Stroke_3.Parent, Stroke_4.Parent, Stroke_5.Parent, Stroke_6.Parent, Stroke_7.Parent =
-    KA_Mode,
-    Toggle,
-    Degrees_Ui,
-    Entity_Filter,
-    Anti_Streamer,
-    Attack_Range
+    local Stroke_2, Stroke_3, Stroke_4, Stroke_5, Stroke_6, Stroke_7 =
+        Stroke_1:Clone(),
+        Stroke_1:Clone(),
+        Stroke_1:Clone(),
+        Stroke_1:Clone(),
+        Stroke_1:Clone(),
+        Stroke_1:Clone()
 
-Main.Position = UDim2.new(1.1, 0, 0.467000008, 0)
-lobotomy_KA.Parent = game.CoreGui
+    Stroke_2.Parent, Stroke_3.Parent, Stroke_4.Parent, Stroke_5.Parent, Stroke_6.Parent, Stroke_7.Parent =
+        KA_Mode,
+        Toggle,
+        Degrees_Ui,
+        Entity_Filter,
+        Anti_Streamer,
+        Attack_Range
 
-DegreesTextbox.Text = tostring(Settings.Degrees)
-RangeTextbox.Text = tostring(Settings.Range)
-Anti_Streamer.Text = "Anti Streamer: [" .. tostring(Settings.Anti_Streamer) .."]"
-Entity_Filter.Text = "Entity Filter: [" .. tostring(Settings.Filter) .. "]"
-KA_Mode.Text = "KA Mode: [" .. tostring(Settings.Mode) .. "]"
-Toggle.Text = "Toggle: [" .. tostring(Enabled) .. "]"
-lobotomy_KA.Enabled = Settings.Visible
+    Main.Position = UDim2.new(1.1, 0, 0.467000008, 0)
+    lobotomy_KA.Parent = game.CoreGui
+
+    DegreesTextbox.Text = tostring(Settings.Degrees)
+    RangeTextbox.Text = tostring(Settings.Range)
+    Anti_Streamer.Text = "Anti Streamer: [" .. tostring(Settings.Anti_Streamer) .."]"
+    Entity_Filter.Text = "Entity Filter: [" .. tostring(Settings.Filter) .. "]"
+    KA_Mode.Text = "KA Mode: [" .. tostring(Settings.Mode) .. "]"
+    Toggle.Text = "Toggle: [" .. tostring(Enabled) .. "]"
+    lobotomy_KA.Enabled = Settings.Visible
+end
+
+for _, Within_Game: Player in pairs(game:GetService("Players"):GetPlayers()) do
+    if Within_Game == plr then continue end
+    if Within_Game.Character then 
+        table.insert(Store.Characters, Within_Game.Character)
+    else
+        Within_Game.CharacterAdded:Once(function(Within_Game_Character)
+
+
+            table.insert(Store.Characters, Within_Game_Character)
+            Anti_Streamer_This(Within_Game)
+
+        end)
+    end
+end
 
 Obtain_Inventory(true)
 task.wait(0.25)
@@ -1137,6 +1159,10 @@ end))
 table.insert(Connections, Anti_Streamer.MouseButton1Click:Connect(function()
     Settings.Anti_Streamer = not Settings.Anti_Streamer
     Anti_Streamer.Text = "Anti Streamer: [" .. tostring(Settings.Anti_Streamer) .."]"
+
+    for _, Player in pairs(game.Players:GetPlayers()) do
+        Anti_Streamer_This(Player)
+    end
 end))
 
 table.insert(Connections, Entity_Filter.MouseButton1Click:Connect(function()
@@ -1290,6 +1316,15 @@ table.insert(Connections, UIS.WindowFocusReleased:Connect(function(Input, Proces
     Focused = false
 end))
 
+table.insert(Connections, game.Players.PlayerAdded:Connect(function(Entered)
+    table.insert(Connections, Entered.CharacterAdded:Connect(function(Entered_Character)
+
+        table.insert(Store.Characters, Entered_Character)
+        Anti_Streamer_This(Entered)
+
+    end))
+end))
+
 while Deleted == false do
     Chr = plr.Character
     root = (Chr and Chr:FindFirstChild("HumanoidRootPart"))
@@ -1358,9 +1393,9 @@ while Deleted == false do
         Obtain_Inventory(true)
     end
 
-    for _, Player in pairs(game.Players:GetPlayers()) do
-        Anti_Streamer_This(Player)
-    end
+    --for _, Player in pairs(game.Players:GetPlayers()) do
+    --    Anti_Streamer_This(Player)
+    --end
 
     
 
@@ -1376,6 +1411,7 @@ for _, v:RBXScriptConnection in pairs(Connections) do
     if v then v:Disconnect() end
 end
 
+table.clear(Store)
 Save_Settings()
 if Conf then Conf:Destroy() end
 if lobotomy_KA then lobotomy_KA:Destroy() end

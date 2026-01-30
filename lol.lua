@@ -844,7 +844,7 @@ local function Break_This_Block(Block_Position, Block, Normal, anim)
                             task.wait()
                         until not Break_Hold
 
-                        warn("Code is done")
+                        if Debug then warn("Code is done") end
 
 						if animation ~= nil then
 							animation:Stop()
@@ -1234,7 +1234,7 @@ table.insert(Connections, UIS.InputBegan:Connect(function(Input, Processed)
 
                     if Debug then print("Block = " .. tostring(Block)) end
 
-                    local Block_Position = Get_Block_Position(Block.Position)
+                    local Block_Position = Block and Block.Position and Get_Block_Position(Block.Position)
 
                     if Debug then print("Block Position = " .. tostring(Block.Position)) end
 

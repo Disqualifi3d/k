@@ -799,6 +799,7 @@ local function intialize()
 
                 local Start = tick()
                 local Progress = 0
+                local Dur = Settings.Fish_Duration * Random.new():NextNumber(1, 1.5)
                 
                 repeat 
                     task.wait()
@@ -807,7 +808,7 @@ local function intialize()
                     Marker.Position = UDim2.new(Fish_Zone.Position.X.Scale - (Marker.Size.X.Scale / 2), 0, Marker.Position.Y.Scale, 0)
 
                     local elapsed = tick() - Start
-                    Progress = elapsed / Settings.Fish_Duration
+                    Progress = elapsed / Dur
                     Actual_Bar.Size = UDim2.new(Progress, 0, 1, 0)
                 until Progress >= 1 or not Enabled
 

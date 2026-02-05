@@ -20,7 +20,7 @@ local Settings = {
     Threshold = 10,
 }
 
-queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/Disqualifi3d/Exp/refs/heads/main/bss/player.lua")
+queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/Disqualifi3d/Exp/refs/heads/main/bss/player.lua'))()")
 
 local function getServerList(placeId)
     local cursor

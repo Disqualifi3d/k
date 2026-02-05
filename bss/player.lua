@@ -117,7 +117,7 @@ local function CheckServerAmount()
     local file = readfile and readfile("BSSLIST.DQ")
 
     if file then
-        local Decoded = HttpService:Decode(file)
+        local Decoded = HttpService:JSONDecode(file)
 
         if Decoded.List then return #Decoded.List end
     end
@@ -128,7 +128,7 @@ local function Check_Vicious_Bee_List()
     local file = readfile and readfile("VICIOUSLIST.DQ")
 
     if file then
-        local Decoded = HttpService:Decode(file)
+        local Decoded = HttpService:JSONDecode(file)
 
         if Decoded.List then return #Decoded.List end
     end
@@ -138,7 +138,7 @@ local function Get_Vicious_Bee_Server()
     local file = readfile and readfile("VICIOUSLIST.DQ")
 
     if file then
-        local Decoded = HttpService:Decode(file)
+        local Decoded = HttpService:JSONDecode(file)
         local Selected = Decoded.List and Decoded.List[math.random(1, #Decoded.List)]
 
         local Selected_Server_Index = table.find(Decoded.List, Selected)

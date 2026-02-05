@@ -39,7 +39,7 @@ if readfile and not s then
         
         local js_encoded = HttpService:JSONEncode(Data)
 
-        writefile("BSSLISt.DQ", js_encoded)
+        writefile("BSSLIST.DQ", js_encoded)
     end
 
 end

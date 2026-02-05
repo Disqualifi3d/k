@@ -21,7 +21,7 @@ local Settings = {
 }
 
 
-queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/Disqualifi3d/Exp/refs/heads/main/bss/searcher.lua")
+queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/Disqualifi3d/Exp/refs/heads/main/bss/searcher.lua'))()")
 
 --[[
 BSSLIST.DQ -> {}.List -> {{id = 1}, {id = 1}}

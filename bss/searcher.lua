@@ -82,7 +82,7 @@ local function Get_New_Server()
         table.remove(Decoded.List, Selected_Server_Index)
 
         if writefile then
-            local New_File = HttpService:JSONEncode(Decoded.List)
+            local New_File = HttpService:JSONEncode(Decoded)
 
             writefile("BSSLIST.DQ", New_File)
         end
@@ -114,7 +114,7 @@ local function Insert_Server()
         table.insert(Decoded.List, Data)
 
         if writefile then
-            local New_File = HttpService:JSONEncode(Decoded.List)
+            local New_File = HttpService:JSONEncode(Decoded)
 
             writefile("VICIOUSLIST.DQ", New_File)
         end

@@ -48,7 +48,7 @@ local s, e = pcall(function()
 readfile("VICIOUSLIST.DQ")
 end)
 
-if readfile and s then
+if readfile and not s then
     
     if writefile then
         

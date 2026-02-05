@@ -22,6 +22,40 @@ local Settings = {
 
 queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/Disqualifi3d/Exp/refs/heads/main/bss/player.lua'))()")
 
+if readfile and not readfile("BSSLIST.DQ") then
+    
+    if writefile then
+        
+        local Data = {
+            List = {}
+        }
+
+        print("Creating BSSLIST.DQ")
+        
+        local js_encoded = HttpService:JSONEncode(Data)
+
+        writefile("BSSLISt.DQ", js_encoded)
+    end
+
+end
+
+if readfile and not readfile("VICIOUSLIST.DQ") then
+    
+    if writefile then
+        
+        local Data = {
+            List = {}
+        }
+        
+        local js_encoded = HttpService:JSONEncode(Data)
+
+        print("Creating VICIOUSLIST.DQ")
+
+        writefile("VICIOUSLIST.DQ", js_encoded)
+    end
+
+end
+
 local function getServerList(placeId)
     local cursor
     local servers = {}

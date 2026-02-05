@@ -145,7 +145,7 @@ local function Get_Vicious_Bee_Server()
         table.remove(Decoded.List, Selected_Server_Index)
 
         if writefile then
-            local New_File = HttpService:JSONEncode(Decoded.List)
+            local New_File = HttpService:JSONEncode(Decoded)
 
             writefile("VICIOUSLIST.DQ", New_File)
         end

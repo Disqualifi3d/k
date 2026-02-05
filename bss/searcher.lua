@@ -75,7 +75,7 @@ local function Get_New_Server()
     local file = readfile and readfile("BSSLIST.DQ")
 
     if file then
-        local Decoded = HttpService:Decode(file)
+        local Decoded = HttpService:JSONDecode(file)
         local Selected = Decoded.List and Decoded.List[math.random(1, #Decoded.List)]
 
         local Selected_Server_Index = table.find(Decoded.List, Selected)
@@ -107,7 +107,7 @@ local function Insert_Server()
     local file = readfile and readfile("VICIOUSLIST.DQ")
 
     if file then
-        local Decoded = HttpService:Decode(file)
+        local Decoded = HttpService:JSONDecode(file)
 
         local Data = {id = game.JobId}
 

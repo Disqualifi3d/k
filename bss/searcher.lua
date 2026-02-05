@@ -23,7 +23,11 @@ local Settings = {
 
 queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/Disqualifi3d/Exp/refs/heads/main/bss/searcher.lua'))()")
 
-if readfile and not readfile("BSSLIST.DQ") then
+local s, e = pcall(function() 
+readfile("BSSLIST.DQ")
+end)
+
+if readfile and not s then
     
     if writefile then
         
@@ -40,7 +44,11 @@ if readfile and not readfile("BSSLIST.DQ") then
 
 end
 
-if readfile and not readfile("VICIOUSLIST.DQ") then
+local s, e = pcall(function() 
+readfile("VICIOUSLIST.DQ")
+end)
+
+if readfile and s then
     
     if writefile then
         

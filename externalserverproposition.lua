@@ -4,7 +4,7 @@ local Settings = {
     Color = Color3.fromRGB(255, 0, 0),
 
     --// Metal_Detector
-    Pick_Up_Speed = 0.15,
+    Pick_Up_Speed = 1,
     Metal_Size = 2,
 
     --// Star Collector
